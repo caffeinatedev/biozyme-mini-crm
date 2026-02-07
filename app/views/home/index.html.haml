@@ -1,0 +1,8 @@
+%h1 Welcome
+%p
+  - if user_signed_in?
+    You are signed in as
+    %strong= current_user.name
+  - else
+    You are not signed in.
+    = link_to "Sign in", new_user_session_path, class: "btn btn-primary ms-2"
