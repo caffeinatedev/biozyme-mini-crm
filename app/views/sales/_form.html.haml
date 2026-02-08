@@ -1,0 +1,19 @@
+= form_with model: @sale, local: true do |f|
+  .mb-3
+    = f.label :contact_id, "Contact"
+    = f.collection_select :contact_id,
+      Contact.all,
+      :id,
+      :name,
+      { prompt: "Select a contact" },
+      class: "form-select"
+
+  .mb-3
+    = f.label :sold_on, "Sale Date"
+    = f.date_field :sold_on, class: "form-control"
+
+  .mb-3
+    = f.label :amount_cents, "Sale Amount"
+    = f.number_field :amount_cents, class: "form-control", step: 100
+
+  = f.submit class: "btn btn-primary"

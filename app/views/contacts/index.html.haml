@@ -1,0 +1,25 @@
+.container.mt-4
+  .d-flex.justify-content-between.mb-3
+    %h2 Contacts
+    = link_to "New Contact", new_contact_path, class: "btn btn-primary"
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Company
+        %th Email
+        %th Actions
+    %tbody
+      - @contacts.each do |contact|
+        %tr
+          %td= contact.name
+          %td= contact.company
+          %td= contact.email
+          %td
+            = link_to "View", contact_path(contact), class: "btn btn-sm btn-outline-secondary"
+            = link_to "Edit", edit_contact_path(contact), class: "btn btn-sm btn-outline-primary"
+            = link_to "Delete", contact_path(contact),
+              method: :delete,
+              data: { confirm: "Are you sure?" },
+              class: "btn btn-sm btn-outline-danger"

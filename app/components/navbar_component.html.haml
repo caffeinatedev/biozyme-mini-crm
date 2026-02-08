@@ -10,6 +10,14 @@
         %li.nav-item
           = link_to "Home", root_path, class: "nav-link"
 
+        - if user_signed_in?
+          %li.nav-item
+            = link_to "Contacts", contacts_path, class: "nav-link"
+          %li.nav-item
+            = link_to "Sales", sales_path, class: "nav-link"
+          %li.nav-item
+            = link_to "Budgets", budgets_path, class: "nav-link"
+
       %ul.navbar-nav.ms-auto
         - if user_signed_in?
           %li.nav-item

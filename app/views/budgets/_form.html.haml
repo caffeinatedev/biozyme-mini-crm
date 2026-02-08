@@ -1,0 +1,19 @@
+= form_with model: @budget, local: true do |f|
+  .mb-3
+    = f.label :contact_id, "Contact"
+    = f.collection_select :contact_id,
+      current_user.owned_contacts,
+      :id,
+      :name,
+      { prompt: "Select a contact" },
+      class: "form-select"
+
+  .mb-3
+    = f.label :year
+    = f.number_field :year, class: "form-control", min: 2000
+
+  .mb-3
+    = f.label :amount_cents, "Budget Amount"
+    = f.number_field :amount_cents, class: "form-control", step: 100
+
+  = f.submit class: "btn btn-primary"
