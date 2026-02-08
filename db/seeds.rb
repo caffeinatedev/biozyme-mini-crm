@@ -31,14 +31,14 @@ contact = Contact.create!(
 Sale.create!(
   user: asm,
   contact: contact,
-  amount: 50_000,
+  amount: 50000,
   sold_on: Date.new(2024, 2, 15)
 )
 
 Sale.create!(
   user: second_user,
   contact: contact,
-  amount: 30_000,
+  amount: 30000,
   sold_on: Date.new(2024, 5, 20)
 )
 
@@ -46,5 +46,5 @@ Budget.create!(
   user: asm,
   contact: contact,
   year: 2024,
-  amount: 200_000
+  amount: 200000
 )
