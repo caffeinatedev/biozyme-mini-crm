@@ -1,0 +1,14 @@
+%table.table.table-bordered
+  %thead.table-light
+    %tr
+      %th Quarter
+      %th Total Sales (Direct)
+      %th Total Sales (Indirect)
+      %th Commission
+  %tbody
+    - quarters.each do |quarter|
+      %tr
+        %td= quarter.name
+        %td= number_to_currency(quarter.direct_sales / 100.0)
+        %td= number_to_currency(quarter.indirect_sales / 100.0)
+        %td.fw-bold= number_to_currency(quarter.commission / 100.0)

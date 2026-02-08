@@ -1,0 +1,12 @@
+.container.mt-4
+  %h2 Quarterly Commission Report
+
+  = form_with url: commission_report_path, method: :get, local: true, class: "mb-3" do
+    .row.g-2.align-items-end
+      .col-auto
+        = label_tag :year, "Year", class: "form-label"
+        = number_field_tag :year, @year, class: "form-control", min: 2000
+      .col-auto
+        = submit_tag "Filter", class: "btn btn-secondary"
+
+  = render CommissionReportTableComponent.new(quarters: @report.quarters)
