@@ -23,12 +23,8 @@ Welcome! This take-home exercise is designed to evaluate your ability to work wi
 
 ### 1. Clone this repository
 
-Click the green **"Use this template"** button on Github and select **"Create a new repository"**.
-
-Then clone the new repository to your local environment:
-
 ```bash
-git clone https://github.com/<your username>/biozyme-mini-crm.git
+git clone https://github.com/caffeinatedev/biozyme-mini-crm.git
 cd biozyme-mini-crm
 ```
 
@@ -49,11 +45,16 @@ bin/rails db:migrate
 bin/rails db:seed
 ```
 
-This seeds one demo user:
+This seeds two demo users:
 
 ```
 Email: asm1@example.com
 Password: password
+Name: ASM 1
+
+Email: asm2@example.com
+Password: password
+Name: ASM 2
 ```
 
 ### 4. Run the app

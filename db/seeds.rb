@@ -8,24 +8,66 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.find_or_create_by!(email: "asm1@example.com") do |u|
+puts "Seeding users..."
+
+asm1 = User.find_or_create_by!(email: "asm1@example.com") do |u|
   u.password = "password"
   u.name = "ASM 1"
 end
 
-asm = User.find_by(email: "asm1@example.com")
+asm2 = User.find_or_create_by!(email: "asm2@example.com") do |u|
+  u.password = "password"
+  u.name = "ASM 2"
+end
 
-second_user = User.create!(
-  email: "asm2@example.com",
-  password: "password",
-  name: "ASM 2"
-)
+puts "Seeding contacts..."
 
-contact = Contact.create!(
+contact_a = Contact.create!(
   name: "Acme Corp",
   company: "Acme",
-  email: "contact@acme.test",
-  primary_user: asm
+  email: "acme@example.com",
+  primary_user: asm1
+)
+
+contact_b = Contact.create!(
+  name: "Globex Ltd",
+  company: "Globex",
+  email: "globex@example.com",
+  primary_user: asm1
+)
+
+contact_c = Contact.create!(
+  name: "Initech",
+  company: "Initech",
+  email: "initech@example.com",
+  primary_user: asm2
+)
+
+puts "Seeding budgets..."
+
+[2023, 2024, 2025, 2026].each do |year|
+  Budget.create!(
+    user: asm1,
+    contact: contact_a,
+    year: year,
+    amount_cents: 200000
+  )
+
+  Budget.create!(
+    user: asm1,
+    contact: contact_b,
+    year: year,
+    amount_cents: 150000
+  )
+end
+
+puts "Seeding sales..."
+
+Sale.create!(
+  user: asm1,
+  contact: contact_a,
+  amount_cents: 45_000,
+  sold_on: Date.new(2023, 1, 18)
 )
 
 Sale.create!(
