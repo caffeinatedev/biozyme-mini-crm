@@ -38,7 +38,7 @@ class CommissionReport
   end
 
   def direct_sales(range)
-    Sale.where(user: user, sold_on: range).sum(:amount_cents)
+    Sale.where(user: user, sold_on: range).sum(:amount)
   end
 
   def indirect_sales(range)
@@ -48,7 +48,7 @@ class CommissionReport
           contacts: { primary_user_id: user.id }
         )
         .where.not(user_id: user.id)
-        .sum(:amount_cents)
+        .sum(:amount)
   end
 
   def calculate_commission(direct, indirect)

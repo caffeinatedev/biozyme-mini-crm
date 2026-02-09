@@ -48,6 +48,6 @@ class SalesController < ApplicationController
   end
 
   def sale_params
-    params.require(:sale).permit(:contact_id, :amount_cents, :sold_on)
+    params.require(:sale).permit(:contact_id, :amount, :sold_on)
   end
 end

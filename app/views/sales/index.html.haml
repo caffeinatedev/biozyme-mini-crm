@@ -17,7 +17,7 @@
           %td= sale.contact.name
           %td= sale.user.email
           %td= sale.sold_on.strftime("%b %d, %Y")
-          %td= number_to_currency(sale.amount_cents / 100.0)
+          %td= number_to_currency(sale.amount)
           %td
             = link_to "Edit", edit_sale_path(sale), class: "btn btn-sm btn-outline-primary"
             = link_to "Delete",

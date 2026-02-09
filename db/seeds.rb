@@ -50,14 +50,14 @@ puts "Seeding budgets..."
     user: asm1,
     contact: contact_a,
     year: year,
-    amount_cents: 200000
+    amount: 200000
   )
 
   Budget.create!(
     user: asm1,
     contact: contact_b,
     year: year,
-    amount_cents: 150000
+    amount: 150000
   )
 end
 
@@ -66,7 +66,7 @@ puts "Seeding sales..."
 Sale.create!(
   user: asm1,
   contact: contact_a,
-  amount_cents: 45_000,
+  amount: 45000,
   sold_on: Date.new(2023, 1, 18)
 )
 
