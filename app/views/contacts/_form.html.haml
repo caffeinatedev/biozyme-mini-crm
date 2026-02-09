@@ -1,14 +1,24 @@
-= form_with model: @contact, local: true do |f|
+= form_with model: @contact, local: true,
+  data: { controller: "form-validation", action: "submit->form-validation#submit" } do |f|
   .mb-3
     = f.label :name
-    = f.text_field :name, class: "form-control"
+    = f.text_field :name, 
+    class: "form-control", 
+    required: true,
+    data: { form_validation_target: "field" }
 
   .mb-3
     = f.label :company
-    = f.text_field :company, class: "form-control"
+    = f.text_field :company, 
+    class: "form-control", 
+    required: true, 
+    data: { form_validation_target: "field" }
 
   .mb-3
     = f.label :email
-    = f.email_field :email, class: "form-control"
+    = f.email_field :email, 
+    class: "form-control", 
+    required: true, 
+    data: { form_validation_target: "field" }
 
   = f.submit class: "btn btn-primary"

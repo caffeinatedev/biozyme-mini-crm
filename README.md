@@ -1,4 +1,4 @@
-# MiniCRM — Rails Coding Exercise
+# MiniCRM Rails Coding Exercise
 
 Welcome! This take-home exercise is designed to evaluate your ability to work with Ruby on Rails, model domain logic, write queries, and build a small but clean user experience. You’ll be working in this starter Rails 7 application, which already includes authentication and a modern front-end setup.
 
@@ -15,7 +15,7 @@ Welcome! This take-home exercise is designed to evaluate your ability to work wi
 - **Bootstrap 5** + **Hotwire (Turbo + Stimulus)** for UI
 - **ViewComponent** for reusable UI components
 - **esbuild + Dart Sass** for JS/CSS bundling
-- **No testing framework pre-installed** — you may choose and configure your own (RSpec, Minitest, etc.)
+- **No testing framework pre-installed** - you may choose and configure your own (RSpec, Minitest, etc.)
 
 ---
 
@@ -73,10 +73,10 @@ You should see a Bootstrap-styled home page with a navigation bar and sign-in/si
 
 Build a **mini-CRM** where an Account/Sales Manager (ASM) can:
 
-1. **Manage Contacts** — full CRUD interface; contacts are assigned to a primary user
-2. **Record Sales** — each sale belongs to a contact and a user.
-3. **Set Budgets** — a yearly budget per contact per user.
-4. **View a Quarterly Commission Report** — for their own performance.
+1. **Manage Contacts**  full CRUD interface; contacts are assigned to a primary user
+2. **Record Sales** - each sale belongs to a contact and a user.
+3. **Set Budgets** - a yearly budget per contact per user.
+4. **View a Quarterly Commission Report** - for their own performance.
 
 The **report** should:
 
@@ -153,3 +153,80 @@ Focus on writing code that reflects your normal Rails style and reasoning.
 Show us how you think about modeling, querying, and building small, maintainable features.
 
 Good luck, and happy coding!
+
+
+
+# MiniCRM - Design Choices from SAM 
+
+## 1. Domain Modeling
+
+- **Users**: ASM users with Devise authentication.
+- **Contacts**: Each contact belongs to a primary user (`primary_user`) and can have multiple budgets and sales.
+- **Sales**: Each sale belongs to a contact and a user. Amount stored in **dollars** for simplicity.
+- **Budgets**: Yearly budget per contact per user.
+- **CommissionReport**: Aggregates sales by quarter for direct and indirect commissions.
+
+**Associations**
+- User `has_many` contacts, budgets, and sales
+- Contact `belongs_to` primary_user
+- Sale `belongs_to` user and contact
+- Budget `belongs_to` user and contact
+
+**Trade-offs**
+
+- Kept **amounts in dollars** for simplicity. Could be cents for precision, but unnecessary complexity for this task.
+- Commission calculation is **inline SQL + Rails queries** rather than background jobs, to keep the exercise focused.
+
+---
+
+## 2. Authorization
+
+- Used **Pundit**.
+- All controllers inherit from `ApplicationController` with `before_action :authenticate_user!`.
+- Policy scope ensures users only see their own data.
+- Prevents errors when visiting pages while logged out.
+
+---
+
+## 3. Frontend / UI
+
+- Used **Bootstrap 5** for layout, modals, and form styling.
+- Forms have **modular frontend validation** with a Stimulus controller:
+  - Handles required fields, number constraints
+  - Works with all forms (Sales, Budgets, Contacts)
+  - Minimal JS, reusable across app
+
+---
+
+## 4. Data Seeding
+
+- Seeded 2 users (ASM 1, ASM 2) with multiple contacts, budgets, and sales across **2025–2026**.
+- Direct vs Indirect commission scenarios annotated in seeds.
+- Ensures **realistic data** for commission report testing.
+
+---
+
+## 5. Commission Logic
+
+- **Direct Commission**: 5% of sales created by the user.
+- **Indirect Commission**: 2% of sales by other users for contacts where current user is `primary_user`.
+- Quarters are standard calendar quarters.
+- Report scoped by year; allows filter for multiple years.
+- Implemented via **policies + reusable ViewComponents**.
+
+---
+
+## 6. Code Structure
+
+- Thin controllers: all business logic delegated to models or components.
+- Reusable Stimulus controller for form validations.
+- Clean, readable view templates with consistent Bootstrap styling.
+- Seeds include comments for direct vs indirect commissions for clarity.
+
+---
+
+## 7. Trade-offs / TODOs
+
+- No asynchronous commission calculations (could use background jobs in production in case of more time).
+- No full test coverage (could add system tests with Capybara)
+

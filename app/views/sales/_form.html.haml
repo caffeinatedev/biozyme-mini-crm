@@ -1,4 +1,5 @@
-= form_with model: @sale, local: true do |f|
+= form_with model: @sale, local: true,
+  data: { controller: "form-validation", action: "submit->form-validation#submit" } do |f|
   .mb-3
     = f.label :contact_id, "Contact"
     = f.collection_select :contact_id,
@@ -10,10 +11,17 @@
 
   .mb-3
     = f.label :sold_on, "Sale Date"
-    = f.date_field :sold_on, class: "form-control"
+    = f.date_field :sold_on, 
+    class: "form-control", 
+    required: true, 
+    data: { form_validation_target: "field" }
 
   .mb-3
     = f.label :amount, "Sale Amount"
-    = f.number_field :amount, class: "form-control", step: 100
+    = f.number_field :amount, 
+    class: "form-control", 
+    step: 100,
+    required: true,
+    data: { form_validation_target: "field" }
 
   = f.submit class: "btn btn-primary"

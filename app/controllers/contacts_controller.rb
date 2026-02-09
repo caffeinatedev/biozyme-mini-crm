@@ -19,7 +19,7 @@ class ContactsController < ApplicationController
     authorize @contact
 
     if @contact.save
-      redirect_to @contact, notice: "Contact created successfully."
+      redirect_to contacts_path, notice: "Contact created successfully."
     else
       render :new, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class ContactsController < ApplicationController
     authorize @contact
 
     if @contact.update(contact_params)
-      redirect_to @contact, notice: "Contact updated successfully."
+      redirect_to contacts_path, notice: "Contact updated successfully."
     else
       render :edit, status: :unprocessable_entity
     end

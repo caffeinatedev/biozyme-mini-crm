@@ -33,19 +33,23 @@ contact_b = Contact.create!(
   name: "Globex Ltd",
   company: "Globex",
   email: "globex@example.com",
-  primary_user: asm1
+  primary_user: asm2
 )
 
 contact_c = Contact.create!(
   name: "Initech",
   company: "Initech",
   email: "initech@example.com",
+  primary_user: asm1
+)
+contact_d = Contact.create!(
+  name: "Alpha llc",
+  email: "alpha@llc.com",
   primary_user: asm2
 )
-
 puts "Seeding budgets..."
 
-[2023, 2024, 2025, 2026].each do |year|
+[2025, 2026].each do |year|
   Budget.create!(
     user: asm1,
     contact: contact_a,
@@ -57,36 +61,48 @@ puts "Seeding budgets..."
     user: asm1,
     contact: contact_b,
     year: year,
+    amount: 200000
+  )
+
+  Budget.create!(
+    user: asm2,
+    contact: contact_c,
+    year: year,
+    amount: 200000
+  )
+
+  Budget.create!(
+    user: asm2,
+    contact: contact_d,
+    year: year,
     amount: 150000
   )
 end
 
 puts "Seeding sales..."
 
-Sale.create!(
-  user: asm1,
-  contact: contact_a,
-  amount: 45000,
-  sold_on: Date.new(2023, 1, 18)
-)
+# ---- 2025 ----
+# DIRECT for ASM 1
+Sale.create!(user: asm1, contact: contact_a, amount: 35000, sold_on: Date.new(2025, 1, 25))
 
-Sale.create!(
-  user: asm,
-  contact: contact,
-  amount: 50000,
-  sold_on: Date.new(2024, 2, 15)
-)
+# DIRECT for ASM 1 && INDIRECT for ASM 2
+Sale.create!(user: asm1, contact: contact_b, amount: 20000, sold_on: Date.new(2025, 3, 14))
 
-Sale.create!(
-  user: second_user,
-  contact: contact,
-  amount: 30000,
-  sold_on: Date.new(2024, 5, 20)
-)
+# DIRECT for ASM 2 and DIRECT for ASM 1
+Sale.create!(user: asm2, contact: contact_c, amount: 70000, sold_on: Date.new(2025, 10, 30))
 
-Budget.create!(
-  user: asm,
-  contact: contact,
-  year: 2024,
-  amount: 200000
-)
+# DIRECT for ASM 2
+Sale.create!(user: asm2, contact: contact_d, amount: 25000, sold_on: Date.new(2025, 9, 9))
+
+# ---- 2026 ----
+# DIRECT for ASM 1
+Sale.create!(user: asm1, contact: contact_a, amount: 20000, sold_on: Date.new(2026, 1, 25))
+
+# DIRECT for ASM 1 && INDIRECT for ASM 2
+Sale.create!(user: asm1, contact: contact_b, amount: 40000, sold_on: Date.new(2026, 3, 14))
+
+# DIRECT for ASM 2 and DIRECT for ASM 1
+Sale.create!(user: asm2, contact: contact_c, amount: 30000, sold_on: Date.new(2026, 10, 30))
+
+# DIRECT for ASM 2
+Sale.create!(user: asm2, contact: contact_d, amount: 60000, sold_on: Date.new(2026, 9, 9))

@@ -1,4 +1,5 @@
-= form_with model: @budget, local: true do |f|
+= form_with model: @budget, local: true, 
+  data: { controller: "form-validation", action: "submit->form-validation#submit" } do |f|
   .mb-3
     = f.label :contact_id, "Contact"
     = f.collection_select :contact_id,
@@ -10,10 +11,19 @@
 
   .mb-3
     = f.label :year
-    = f.number_field :year, class: "form-control", min: 2000
+    = f.number_field :year, 
+    class: "form-control", 
+    min: 2000, 
+    required: true, 
+    data: { form_validation_target: "field" }
 
   .mb-3
     = f.label :amount, "Budget Amount"
-    = f.number_field :amount, class: "form-control", step: 100
+    = f.number_field :amount, 
+    class: "form-control", 
+    step: 100, 
+    required: true, 
+    data: { form_validation_target: "field" }
+
 
   = f.submit class: "btn btn-primary"
